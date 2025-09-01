@@ -8,6 +8,18 @@ struct can_frame rx;
 int main() {
     stdio_init_all();
 
+    // wait for serial connection
+    while (!stdio_usb_connected()) {
+        sleep_ms(100);
+    }
+
+    // turn led on
+    gpio_init(25);
+    gpio_set_dir(25, GPIO_OUT);
+    gpio_put(25, 1);
+
+    printf("Serial Connected\n");
+
     //Initialize interface
     can0.reset();
     can0.setBitrate(CAN_1000KBPS, MCP_16MHZ);
